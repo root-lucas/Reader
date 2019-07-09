@@ -1,4 +1,4 @@
-@import 'reset';
+@import 'reset.scss';
 
 //1rem = fontSize px
 //1px = (1 / fontSize)rem
@@ -13,3 +13,43 @@ $fontSize:37.5;
 	justify-content: center;
 	align-items: center;
 }
+
+.icon {
+	color:#333;
+	font-size:px2rem(20);
+}
+
+.slide-down-enter, .slide-down-leave-to { //&符号表示与.title-wrapper是同级
+	transform: translate3d(0,-100%,0);
+}
+.slide-down-enter-to, .slide-down-leave, .slide-up-enter-to, .slide-up-leave {
+	transform: translate3d(0,0,0);
+}
+.slide-down-enter-active, .slide-down-leave-active, .slide-up-enter-active, .slide-up-leave-active {
+	transition: all .3s linear;
+}
+
+.slide-up-enter, .slide-up-leave-to { //&符号表示与.title-wrapper是同级
+	transform: translate3d(0,100%,0);
+}
+
+
+/*.slide-down-enter, .slide-down-leave-to { //&符号表示与.title-wrapper是同级
+	transform: translate3d(0,-100%,0);
+}
+.slide-down-enter-to, .slide-down-leave {
+	transform: translate3d(0,0,0);
+}
+.slide-down-enter-active, .slide-down-leave-active {
+	transition: all .3s linear;
+}
+
+.slide-up-enter, .slide-up-leave-to { //&符号表示与.title-wrapper是同级
+	transform: translate3d(0,100%,0);
+}
+.slide-up-enter-to, .slide-up-leave {
+	transform: translate3d(0,0,0);
+}
+.slide-up-enter-active, .slide-up-leave-active {
+	transition: all .3s linear;
+}*/
