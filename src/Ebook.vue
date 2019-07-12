@@ -15,6 +15,9 @@
 		:defaultFontSize="defaultFontSize"
 		ref="menuBar"
 		@setFontSize="setFontSize"
+		:themeList="themeList"
+		:defaultTheme="defaultTheme"
+		@setTheme="setTheme"
 		></menu-bar>
 	</div>
 </template>
@@ -48,7 +51,42 @@ export default {
 				{fontSize:22},
 				{fontSize:24}
 			],
-			defaultFontSize:16
+			defaultFontSize:16,
+			themeList: [
+				{
+					name:'default',
+					style:{
+						body:{
+							'color':'#000',background:'#fff'
+						}
+					}
+				},
+				{
+					name:'eye',
+					style:{
+						body:{
+							'color':'#000',background:'#ceeaba'
+						}
+					}
+				},
+				{
+					name:'night',
+					style:{
+						body:{
+							'color':'#fff',background:'#000'
+						}
+					}
+				},
+				{
+					name:'gold',
+					style:{
+						body:{
+							'color':'#000',background:'rgb(241,236,226)'
+						}
+					}
+				},
+			],
+			defaultTheme:0,
 		}
 	},
 	methods:{
@@ -70,6 +108,12 @@ export default {
 			this.themes = this.rendition.themes;
 			//设置默认字体
 			this.setFontSize(this.defaultFontSize);
+			/*thems的俩个方法:
+				主题注册:this.themes.register(name,styles)
+				主题切换:this.themes.select(name)
+			*/
+			this.registerTheme();
+			this.setTheme(this.defaultTheme)
 		},
 		//翻页功能
 		prevPage () {
@@ -97,7 +141,18 @@ export default {
 			if(this.themes){
 				this.themes.fontSize(fontSize + 'px');
 			}
-		}
+		},
+		registerTheme () {
+			this.themeList.forEach(theme => {
+			  //注册全部主题颜色样式
+		      this.themes.register(theme.name, theme.style)
+		    })
+		},
+		setTheme (index) {
+			//切换主题
+			this.themes.select(this.themeList[index].name);
+			this.defaultTheme = index;
+		}, 
 	},
 	mounted() {
 		//页面加载后

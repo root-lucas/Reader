@@ -9,17 +9,16 @@
 					<span class="iconfont icon icon-progress">&#xe600;</span>
 				</div>
 				<div class="icon-wrapper">
-					<span class="iconfont icon icon-bright">&#xe614;</span>
+					<span class="iconfont icon icon-bright" @click="showSetting(1)">&#xe614;</span>
 				</div>
 				<div class="icon-wrapper">
-					<span class="iconfont icon icon-font"
-					@click="showSetting">&#xe64c;</span>
+					<span class="iconfont icon icon-font" @click="showSetting(0)">&#xe64c;</span>
 				</div>
 			</div>
 		</transition>
 		<transition name="slide-up">
 			<div class="setting-wrapper" v-show="ifSettingShow">
-				<div class="setting-font-size">
+				<div class="setting-font-size" v-if="showTag === 0">
 					<div class="preview" :style="{fontSize:fontSizeList[0].fontSize + 'px'}">A</div>
 					<div class="select">
 						<div class="select-wrapper" 
@@ -39,6 +38,12 @@
 
 					<div class="preview" :style="{fontSize:fontSizeList[fontSizeList.length - 1].fontSize + 'px'}">A</div>
 				</div>
+				<div class="setting-theme" v-else-if="showTag === 1">
+					<div class="setting-theme-item" v-for="(item,index) in themeList" :key="index" @click="setTheme(index)">
+						<div class="preview" :style="{background:item.style.body.background}" :class="{'no-border':item.style.body.background !== '#fff'}"></div>
+						<div class="text" :class="{'selected':index === defaultTheme}">{{item.name}}</div>
+					</div>
+				</div>
 			</div>
 		</transition>
 	</div>
@@ -47,26 +52,34 @@
 export default {
 	props:{
 		ifTitleAndMenuShow:{
-			type:Boolean,
-			default:false,
+			type: Boolean,
+			default: false,
 		},
-		fontSizeList:Array,
-		defaultFontSize:Number,
+		fontSizeList: Array,
+		defaultFontSize: Number,
+		themeList: Array,
+		defaultTheme: Number,
 	},
 	data() {
 		return {
 			ifSettingShow: false,
+			showTag: 0,
+
 		}
 	},
 	methods:{
-		showSetting () {
+		showSetting (tag) {
 			this.ifSettingShow=true;
+			this.showTag = tag;
 		},
 		hideSetting () {
 			this.ifSettingShow = false;
 		},
 		setFontSize (fontSize) {
 			this.$emit('setFontSize',fontSize);
+		},
+		setTheme (index) {
+			this.$emit('setTheme',index);
 		}
 	}	
 }
@@ -170,6 +183,34 @@ export default {
 								border-radius:50%;
 							}
 						}
+					}
+				}
+			}
+		}
+		.setting-theme {
+			height:100%;
+			display:flex;
+			.setting-theme-item {
+				flex:1;
+				display:flex;
+				flex-direction:column;
+				padding:px2rem(5);
+				box-sizing:border-box;
+				.preview {
+					flex:1;
+					border:px2rem(1) solid #ccc;
+					box-sizing:border-box;
+					&.no-border {
+						border:none;
+					}
+				}
+				.text {
+					flex:0 0 px2rem(20);
+					font-size:px2rem(14);
+					color:#999;
+					@include center;
+					&.selected {
+						color:#333;
 					}
 				}
 			}
