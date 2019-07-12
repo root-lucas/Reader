@@ -1,23 +1,6 @@
 <template>
 	<div class="ebook">
-	<transition name="slide-down">
-		<div class="title-wrapper" v-show="ifTitleAndMenuShow">
-			<div class="left">
-				<span class="iconfont icon">&#xe617;</span>
-			</div>
-			<div class="right">
-				<div class="icon-wrapper icon">
-					<span class="iconfont">&#xe61d;</span>
-				</div>
-				<div class="icon-wrapper">
-					<span class="iconfont icon">&#xe63a;</span>
-				</div>
-				<div class="icon-wrapper">
-					<span class="iconfont icon">&#xe65b;</span>
-				</div>
-			</div>
-		</div>
-	</transition>
+		<title-bar :ifTitleAndMenuShow="ifTitleAndMenuShow"></title-bar>
 		<div class="read-wrapper">
 			<div id='read'></div>
 			<div class="mask">
@@ -26,36 +9,46 @@
 				<div class="right" @click="nextPage"></div>
 			</div>
 		</div>
-	<transition name="slide-up">
-		<div class="menu-wrapper" v-show="ifTitleAndMenuShow">
-			<div class="icon-wrapper">
-				<span class="iconfont icon icon-menu">&#xe655;</span>
-			</div>
-			<div class="icon-wrapper">
-				<span class="iconfont icon icon-progress">&#xe600;</span>
-			</div>
-			<div class="icon-wrapper">
-				<span class="iconfont icon icon-bright">&#xe614;</span>
-			</div>
-			<div class="icon-wrapper">
-				<span class="iconfont icon icon-font">&#xe64c;</span>
-			</div>
-		</div>
-	</transition>
+		<menu-bar 
+		:ifTitleAndMenuShow="ifTitleAndMenuShow"
+		:fontSizeList="fontSizeList"
+		:defaultFontSize="defaultFontSize"
+		ref="menuBar"
+		@setFontSize="setFontSize"
+		></menu-bar>
 	</div>
 </template>
 
 <script>
+import TitleBar from '@/components/TitleBar'
+import MenuBar from '@/components/MenuBar'
+
 import Epub from 'epubjs'
 const DOWNLOAD_URL = '/static/2019_Book.epub'	//载入下载电子书
 global.ePub = Epub   // 设置全局的ePub对象
 
 /*eslint-disable space-before-funtion-paren */
 
+
 export default {
+	components:{
+		TitleBar,
+		MenuBar,
+
+	},
 	data() {
 		return {
 			ifTitleAndMenuShow: false,
+			fontSizeList: [
+				{fontSize:12},
+				{fontSize:14},
+				{fontSize:16},
+				{fontSize:18},
+				{fontSize:20},
+				{fontSize:22},
+				{fontSize:24}
+			],
+			defaultFontSize:16
 		}
 	},
 	methods:{
@@ -72,7 +65,11 @@ export default {
 			})
 
 			//通过Rendtion.display渲染电子书
-			this.rendition.display()
+			this.rendition.display();
+			//获取Theme对象
+			this.themes = this.rendition.themes;
+			//设置默认字体
+			this.setFontSize(this.defaultFontSize);
 		},
 		//翻页功能
 		prevPage () {
@@ -89,7 +86,18 @@ export default {
 		toggleTitleAndMenu () {
 			//切换
 			this.ifTitleAndMenuShow=!this.ifTitleAndMenuShow;
+			if(!this.ifTitleAndMenuShow){
+				//ref 加在子组件上,获取到的是组件实例,可以使用组件的所有方法,this.$refs.(ref值).组件方法,。
+				this.$refs.menuBar.hideSetting();  
+			}
 		},
+		//设置字体大小切换
+		setFontSize (fontSize) {
+			this.defaultFontSize = fontSize;
+			if(this.themes){
+				this.themes.fontSize(fontSize + 'px');
+			}
+		}
 	},
 	mounted() {
 		//页面加载后
@@ -113,33 +121,7 @@ $fontSize: 37.5;
 
 .ebook {	
 	position: relative;
-	.title-wrapper {
-			position:absolute;
-			top:0;
-			left:0;
-			z-index:101;
-			width:100%;
-			display:flex;
-			height:px2rem(48);
-			background:white;
-			box-shadow: 0 px2rem(8) px2rem(8) rgba(0,0,0,.15);
-		.left {
-			flex: 0 0 px2rem(60);
-			@include center;
-		}	
-		.right {
-			flex: 1;
-			display:flex;
-			justify-content:flex-end;
-			.icon-wrapper {
-				flex: 0 0 px2rem(40);
-				@include center;
-				.icon-cart {
-					font-size:px2rem(22);
-				}
-			}
-		}
-	}
+
 	.read-wrapper {
 		.mask {
 			position: absolute; 
@@ -159,27 +141,7 @@ $fontSize: 37.5;
 			}
 		}
 	}
-	.menu-wrapper {
-			position:absolute;
-			bottom:0;
-			left:0;
-			z-index:101;
-			display:flex;
-			width:100%;
-			height:px2rem(48);
-			background:white;
-			box-shadow: 0 px2rem(-8) px2rem(8) rgba(0,0,0,.15);
-			.icon-wrapper {
-				flex:1;
-				@include center;
-				.icon-progress {
-					font-size:px2rem(28)
-				}
-				.icon-bright {
-					font-size:px2rem(24)
-				}
-			}	
-	}
+
 }
 
 </style>
