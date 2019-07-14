@@ -3,6 +3,12 @@
 
 > A Vue.js project
 
+扫描二维码预览	Scan QR code
+
+![san](https://raw.githubusercontent.com/root-lucas/Reader/master/static/QR-Code.png)
+
+Demo address https://root-lucas.github.io/Reader/dist/index.html
+
 ## Build Setup
 
 ``` bash
