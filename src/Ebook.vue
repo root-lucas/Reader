@@ -31,7 +31,7 @@ import TitleBar from '@/components/TitleBar'
 import MenuBar from '@/components/MenuBar'
 
 import Epub from 'epubjs'
-const DOWNLOAD_URL = '/static/2019_Book.epub'	//载入下载电子书
+const DOWNLOAD_URL = 'static/2019_Book.epub'	//载入下载电子书
 global.ePub = Epub   // 设置全局的ePub对象
 
 /*eslint-disable space-before-funtion-paren */
