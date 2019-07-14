@@ -7,6 +7,8 @@
 
 ![san](https://raw.githubusercontent.com/root-lucas/Reader/master/static/QR-Code.png)
 
+Demo address https://root-lucas.github.io/Reader/dist/index.html
+
 ## Build Setup
 
 ``` bash
