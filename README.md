@@ -2,12 +2,25 @@
 一个手机阅读器，实现电子书的阅读功能，以及一些辅助功能，如翻页、字号设置、主题设置、阅读进度调整和电子书目录
 
 > A Vue.js project
+ 
+__mobile demo:__
 
 扫描二维码预览	Scan QR code
 
 ![san](https://raw.githubusercontent.com/root-lucas/Reader/master/static/QR-Code.png)
 
-Demo address https://root-lucas.github.io/Reader/dist/index.html
+__PC demo:__
+
+https://root-lucas.github.io/Reader/dist/index.html
+
+### Key point
+
+1.  a project built by vue
+2.  rem-based layout
+3.  Scss
+4.  Responsive Design
+5.  webpack
+6.  epub.js
 
 ## Build Setup
 
