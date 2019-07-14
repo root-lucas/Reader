@@ -13,6 +13,8 @@ __PC demo:__
 
 https://root-lucas.github.io/Reader/dist/index.html
 
+Tip:Github server is slow to load and may take some time
+
 ### Key point
 
 1.  a project built by vue
