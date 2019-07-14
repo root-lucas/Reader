@@ -13,11 +13,15 @@
 		:ifTitleAndMenuShow="ifTitleAndMenuShow"
 		:fontSizeList="fontSizeList"
 		:defaultFontSize="defaultFontSize"
-		ref="menuBar"
 		@setFontSize="setFontSize"
 		:themeList="themeList"
 		:defaultTheme="defaultTheme"
 		@setTheme="setTheme"
+		:bookAvailable="bookAvailable"
+		@onProgressChange="onProgressChange"
+		:navigation="navigation"
+		@jumpTo="jumpTo"
+		ref="menuBar"
 		></menu-bar>
 	</div>
 </template>
@@ -87,6 +91,8 @@ export default {
 				},
 			],
 			defaultTheme:0,
+			bookAvailable: false,
+			navigation: null,
 		}
 	},
 	methods:{
@@ -113,7 +119,19 @@ export default {
 				主题切换:this.themes.select(name)
 			*/
 			this.registerTheme();
-			this.setTheme(this.defaultTheme)
+			this.setTheme(this.defaultTheme);
+			//获取Locations对象
+			//通过epubjs钩子函数来实现电子书定位
+			this.book.ready.then(() => {
+				//生成目录
+				this.navigation = this.book.navigation;
+				// console.log(this.navigation);
+				return this.book.locations.generate()
+			}).then(result => {
+				this.locations = this.book.locations;
+				// this.onProgressChange(50); //实现跳转到百分之50的位置
+				this.bookAvailable = true;
+			})
 		},
 		//翻页功能
 		prevPage () {
@@ -152,9 +170,28 @@ export default {
 			//切换主题
 			this.themes.select(this.themeList[index].name);
 			this.defaultTheme = index;
-		}, 
+		},
+		//propress进度条的数值(0-100)
+		onProgressChange (progress) {
+			const percentage = progress / 100;
+			const location = percentage > 0 ? this.locations.cfiFromPercentage(percentage):0;
+			this.rendition.display(location)
+		},
+			hideTitleAndMenu () {
+			//隐藏标题栏和菜单栏
+			this.ifTitleAndMenuShow = false;
+			//隐藏菜单栏弹出的设置栏
+			this.$refs.menuBar.hideSetting();
+			//隐藏目录
+			this.$refs.menuBar.hideContent();
+		},
+		//根据链接跳转到指定位置(目录)
+		jumpTo (href) {
+			this.rendition.display(href);
+			this.hideTitleAndMenu();
+		},
 	},
-	mounted() {
+	mounted () {
 		//页面加载后
 		this.showEpub()
 	}
@@ -196,7 +233,6 @@ $fontSize: 37.5;
 			}
 		}
 	}
-
 }
 
 </style>
