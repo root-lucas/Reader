@@ -9,11 +9,13 @@ __mobile demo:__
 
 ![san](https://raw.githubusercontent.com/root-lucas/Reader/master/static/QR-Code.png)
 
+Tip:通过点击页面最左最右实现翻页功能(By clicking the page most left most right to achieve page turning function)
+
 __PC demo:__
 
 https://root-lucas.github.io/Reader/dist/index.html
 
-Tip:Github server is slow to load and may take some time
+Tip:通过点击页面最左最右实现翻页功能(By clicking the page most left most right to achieve page turning function)
 
 ### Key point
 
