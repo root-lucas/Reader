@@ -9,13 +9,11 @@ __mobile demo:__
 
 ![san](https://raw.githubusercontent.com/root-lucas/Reader/master/static/QR-Code.png)
 
-Tip:通过点击页面最左最右实现翻页功能(By clicking the page most left most right to achieve page turning function)
-
 __PC demo:__
 
 https://root-lucas.github.io/Reader/dist/index.html
 
-Tip:通过点击页面最左最右实现翻页功能(By clicking the page most left most right to achieve page turning function)
+### 使用方法:通过点击页面中间查看辅助功能菜单，单击页面最左最右实现电子书翻页功能
 
 ### Key point
 
