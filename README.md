@@ -13,7 +13,7 @@ __PC demo:__
 
 https://root-lucas.github.io/Reader/dist/index.html
 
-Tip:Github server is slow to load and may take some time
+### 使用方法:通过点击页面中间查看辅助功能菜单，单击页面最左最右实现电子书翻页功能
 
 ### Key point
 
